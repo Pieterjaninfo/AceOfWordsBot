@@ -1,5 +1,7 @@
 package main;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -16,6 +18,7 @@ import java.util.Scanner;
  */
 public class Utils {
     private Utils() {}
+    private static final String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public static List<String> readFile(String input) {
         Scanner s = null;
@@ -43,6 +46,39 @@ public class Utils {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+
+    public static void storeImage(BufferedImage image, String output) {
+        try {
+            ImageIO.write(image, "png", new File(output));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<BufferedImage> loadImages() {
+        List<BufferedImage> images = new ArrayList<>();
+        String path = "resources/letters/Letter_";
+        for (int i = 0; i < letters.length(); i++) {
+            try {
+                images.add(ImageIO.read(new File(path + letters.charAt(i) + ".png")));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return images;
+    }
+
+    public static BufferedImage loadImage(String input) {
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File(input));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return img;
     }
 
 }

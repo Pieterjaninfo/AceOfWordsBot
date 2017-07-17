@@ -11,6 +11,7 @@ import java.util.List;
 
 /**
  * Class for reading the word tiles and returning it as a String type.
+ * Settings: min x = 20, max x = 1250, min y = 400, max y = 560
  */
 public class Capturer {
 
@@ -25,12 +26,11 @@ public class Capturer {
         } catch (AWTException e) {
             e.printStackTrace();
         }
-
-        imageList = loadImages();
+        imageList = Utils.loadImages();
     }
 
     public String captureLetters() {
-        return "nulepitc";
+        return "nulepitc";  //TODO implement
     }
 
 
@@ -40,54 +40,59 @@ public class Capturer {
     }
 
 
-    public void storeImage(BufferedImage image, String output) {
-        try {
-            ImageIO.write(image, "png", new File(output));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+    public int countSubImages(BufferedImage img, BufferedImage subimg) {
+        int count = 0;
+        int width = subimg.getWidth();
+        int heigth = subimg.getHeight();
 
-    public List<BufferedImage> loadImages() {
-        List<BufferedImage> images = new ArrayList<>();
-        String path = "resources/letters/Letter_";
-        for (int i = 0; i < letters.length(); i++) {
-            try {
-                System.out.println("path=" + path + letters.charAt(i) + ".png");
-                images.add(ImageIO.read(new File(path + letters.charAt(i) + ".png")));
-            } catch (IOException e) {
-                e.printStackTrace();
+        for (int y = 400; y < 560; y++) {
+            for (int x = 20; x < 1250; x++) {
+//                System.out.printf("(x,y) = (%d,%d)%n", x, y);
+                if (imageEqual(img.getSubimage(x, y, width, heigth), subimg)) {
+                    count++;
+                    System.out.printf("(x,y) = (%d,%d)%n", x, y);
+                }
             }
         }
-        return images;
-    }
-
-    public int subImage() {
-        int count = 0;
-
-
-
         return count;
     }
 
+    /**
+     * Checks whether two BufferedImages are pixel perfectly equal, assuming equal size.
+     */
+    public boolean imageEqual(BufferedImage imgA, BufferedImage imgB) {
+        for (int y = 0; y < imgA.getHeight(); y++) {
+            for (int x = 0; x < imgA.getWidth(); x++) {
+                if (imgA.getRGB(x, y) != imgB.getRGB(x, y)) {
+                    if (x != 0 || y != 0) {
+                        System.out.printf("FALSE (x,y) = (%d,%d)%n", x, y);
+                        Utils.storeImage(imgA, "resources/test/x=" + x + "y=" + y + ".png");
+                    }
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 
 
 
     // ===================== EXECUTE CODE ===========================
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         Capturer capturer = new Capturer();
 //        BufferedImage img = capturer.captureScreen();
-//        capturer.storeImage(img, "resources/test_img.png");
 
-        System.out.println(capturer.loadImages());
+        Thread.sleep(1000);
+        BufferedImage subimg = imageList.get(4); // LETTER E
+//        BufferedImage mainimg = Utils.loadImage("resources/test_img.png");
 
-        BufferedImage img = imageList.get(4); // LETTER E
+        BufferedImage mainimg = capturer.captureScreen();
+        System.out.println(capturer.countSubImages(mainimg, subimg));
 
 
-
+        Utils.storeImage(mainimg, "resources/test_mainimg.png");
+        Utils.storeImage(subimg, "resources/test_subimg.png");
     }
-
-
 
 }

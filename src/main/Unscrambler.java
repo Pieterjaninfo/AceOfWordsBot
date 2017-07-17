@@ -11,7 +11,7 @@ public class Unscrambler {
 
 
     public static void main(String[] args) throws Exception {
-        System.out.println(retrieveWords("rujedose").size());
+        System.out.println(retrieveWords("tusinemi").size());
     }
 
 
