@@ -1,5 +1,4 @@
-﻿
-ace
+﻿ace
 act
 add
 aft

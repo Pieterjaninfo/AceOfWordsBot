@@ -11,9 +11,7 @@ public class Unscrambler {
 
 
     public static void main(String[] args) throws Exception {
-        System.out.println(retrieveWords("saneremm").size());
-
-
+        System.out.println(retrieveWords("rujedose").size());
     }
 
 
@@ -26,9 +24,8 @@ public class Unscrambler {
             }
         }
 
-
-        Set<String> furtherFilteredWords = new HashSet<>();
         // limit even further
+        Set<String> furtherFilteredWords = new HashSet<>();
         for (String word : filteredWords) {
             String temp = word;
 
@@ -42,44 +39,8 @@ public class Unscrambler {
                 furtherFilteredWords.add(word);
             }
         }
-
-
-
-
         return furtherFilteredWords;
     }
-
-
-//    public static Set<String> permute(String key) {
-//        Set<String> set = new TreeSet<>();
-//        for (int i = 0; i < key.length(); i++) {
-//            Set<String> temp = new HashSet<>();
-//            char c = key.charAt(i);
-//
-//            for (String str : set) {
-//                temp.add(str + c);
-//            }
-//            set.add(c+"");
-//            set.addAll(temp);
-//        }
-//        return set;
-//    }
-//
-//    public static Set<String> filterPermutations(String key) {
-//        Set<String> words = new HashSet<>();
-//
-//        Set<String> permutations = permute(key);
-//        for (String permutation : permutations) {
-//            if (DICT.contains(permutation)) {
-//                words.add(permutation);
-//            }
-//        }
-//        return words;
-//    }
-
-
-
-
 
 
 }

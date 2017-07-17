@@ -27,7 +27,7 @@ public class Utils {
         ArrayList<String> list = new ArrayList<>();
         while (s.hasNext()){
 //            list.add(s.next().toLowerCase().replace("\u0003", "").replace("\u0004","").replace("\u0005","").replace(
-//                    "\u0006","").replace("\b","").replace("\u0007","")
+//                    "\u0006","").replace("\u0007","").replace("\b","")
 //            );
             list.add(s.next());
         }
@@ -44,9 +44,5 @@ public class Utils {
             e.printStackTrace();
         }
     }
-
-
-
-
 
 }

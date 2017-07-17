@@ -26,13 +26,13 @@ public class Presser {
     }
 
 
-    public void pressKey(char key) {
+    private void pressKey(char key) {
         int keycode = KeyEvent.getExtendedKeyCodeForChar(key);
         robot.keyPress(keycode);
         robot.keyRelease(keycode);
     }
 
-    public void pressWord(String word) throws InterruptedException {
+    private void pressWord(String word) throws InterruptedException {
         for (int i = 0; i < word.length(); i++) {
             pressKey(word.charAt(i));
             Thread.sleep(DELAY);
@@ -43,6 +43,7 @@ public class Presser {
     }
 
     public void pressAllWords() throws InterruptedException {
+        Thread.sleep(1000);
         for (String word : words) {
             pressWord(word);
             Thread.sleep(DELAY*2);
@@ -50,6 +51,7 @@ public class Presser {
     }
 
     public void nextPuzzle() throws InterruptedException {
+        Thread.sleep(6000);
         int x = 480;
         int y = 640;
         robot.mouseMove(x, y);
