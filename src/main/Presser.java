@@ -1,10 +1,8 @@
-package javas;
+package main;
 
 import java.awt.*;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
-import java.io.InterruptedIOException;
-import java.util.List;
 import java.util.Set;
 
 /**

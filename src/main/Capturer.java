@@ -1,4 +1,4 @@
-package javas;
+package main;
 
 /**
  * Class for reading the word tiles and returning it as a String type.
