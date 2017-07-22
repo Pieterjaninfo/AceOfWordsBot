@@ -1,12 +1,7 @@
 package main;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.nio.Buffer;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +11,7 @@ import java.util.List;
 public class Capturer {
 
     private Robot robot;
-    private static List<BufferedImage> imageList;
+    private static List<BufferedImage> charsList;
 
     String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
@@ -26,7 +21,7 @@ public class Capturer {
         } catch (AWTException e) {
             e.printStackTrace();
         }
-        imageList = Utils.loadImages();
+        charsList = Utils.loadCharacters();
     }
 
     public String captureLetters() {
@@ -37,6 +32,21 @@ public class Capturer {
     public BufferedImage captureScreen() {
         Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
         return robot.createScreenCapture(screenRect);
+    }
+
+
+    /**
+     * Checks whether two BufferedImages are pixel perfectly equal, assuming equal size.
+     */
+    public boolean imageEqual(BufferedImage imgA, BufferedImage imgB) {
+        for (int y = 0; y < imgA.getHeight(); y++) {
+            for (int x = 0; x < imgA.getWidth(); x++) {
+                if (imgA.getRGB(x, y) != imgB.getRGB(x, y)) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 
@@ -51,28 +61,12 @@ public class Capturer {
                 if (imageEqual(img.getSubimage(x, y, width, heigth), subimg)) {
                     count++;
                     System.out.printf("(x,y) = (%d,%d)%n", x, y);
+                } else {
+//                    Utils.storeImage(img.getSubimage(x, y, width, heigth), "resources/test/x=" + x + "y=" + y + ".png");
                 }
             }
         }
         return count;
-    }
-
-    /**
-     * Checks whether two BufferedImages are pixel perfectly equal, assuming equal size.
-     */
-    public boolean imageEqual(BufferedImage imgA, BufferedImage imgB) {
-        for (int y = 0; y < imgA.getHeight(); y++) {
-            for (int x = 0; x < imgA.getWidth(); x++) {
-                if (imgA.getRGB(x, y) != imgB.getRGB(x, y)) {
-                    if (x != 0 || y != 0) {
-                        System.out.printf("FALSE (x,y) = (%d,%d)%n", x, y);
-                        Utils.storeImage(imgA, "resources/test/x=" + x + "y=" + y + ".png");
-                    }
-                    return false;
-                }
-            }
-        }
-        return true;
     }
 
 
@@ -81,18 +75,17 @@ public class Capturer {
 
     public static void main(String[] args) throws InterruptedException {
         Capturer capturer = new Capturer();
-//        BufferedImage img = capturer.captureScreen();
+        ImageProcessor proc = new ImageProcessor();
 
         Thread.sleep(1000);
-        BufferedImage subimg = imageList.get(4); // LETTER E
-//        BufferedImage mainimg = Utils.loadImage("resources/test_img.png");
+        BufferedImage image = capturer.captureScreen().getSubimage(20, 400, 1230, 160);
+        Utils.storeImage(image, "resources/chars/char.png");
+        image = Utils.loadImage("resources/chars/char.png");
+        List<BufferedImage> chars = proc.getCharacters(image);
 
-        BufferedImage mainimg = capturer.captureScreen();
-        System.out.println(capturer.countSubImages(mainimg, subimg));
 
 
-        Utils.storeImage(mainimg, "resources/test_mainimg.png");
-        Utils.storeImage(subimg, "resources/test_subimg.png");
+
     }
 
 }

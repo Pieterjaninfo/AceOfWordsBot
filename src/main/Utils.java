@@ -49,27 +49,25 @@ public class Utils {
     }
 
 
-
     public static void storeImage(BufferedImage image, String output) {
+        String ext = output.substring(output.lastIndexOf(".") + 1);
         try {
-            ImageIO.write(image, "png", new File(output));
+            ImageIO.write(image, ext, new File(output));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static List<BufferedImage> loadImages() {
+
+    public static List<BufferedImage> loadCharacters() {
         List<BufferedImage> images = new ArrayList<>();
-        String path = "resources/letters/Letter_";
+        String path = "resources/chars/char_";
         for (int i = 0; i < letters.length(); i++) {
-            try {
-                images.add(ImageIO.read(new File(path + letters.charAt(i) + ".png")));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            images.add(loadImage(path + letters.charAt(i) + ".png"));
         }
         return images;
     }
+
 
     public static BufferedImage loadImage(String input) {
         BufferedImage img = null;
