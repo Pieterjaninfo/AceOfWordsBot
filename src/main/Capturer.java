@@ -78,9 +78,7 @@ public class Capturer {
                 result = letters.charAt(i);
 
             }
-            System.out.println(letters.charAt(i) + " : " + deviations);
         }
-        System.out.println("");
         return result;
     }
 

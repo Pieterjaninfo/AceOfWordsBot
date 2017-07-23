@@ -55,14 +55,14 @@ public class Presser {
 
     /** Clicks on the next puzzle button. */
     public void nextPuzzle() throws InterruptedException {
-        Thread.sleep(6000);
+        Thread.sleep(5000);
         int x = 480;
         int y = 640;
         robot.mouseMove(x, y);
         robot.mousePress(InputEvent.BUTTON1_MASK);
         Thread.sleep(DELAY);
         robot.mouseRelease(InputEvent.BUTTON1_MASK);
-        Thread.sleep(4000);
+        Thread.sleep(7000);
     }
 
 

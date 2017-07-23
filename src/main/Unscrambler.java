@@ -42,7 +42,16 @@ public class Unscrambler {
     // ===================== EXECUTE CODE ===========================
 
     public static void main(String[] args) throws Exception {
-        System.out.println(retrieveWords("haremeda").size());
+        Set<String> words = retrieveWords("cacwaest");
+
+        System.out.println(words.size());
+        System.out.println("words.contains(\"ace\") = " + words.contains("ace"));
+        System.out.println("DICT.contains(\"ace\") = " + DICT.contains("ace"));
+        System.out.println("DICT.contains(\"\") = " + DICT.contains(""));
+
+        System.out.println("DICT.get(0) = " + DICT.get(0));
+
+        System.out.println("DICT.contains(\"act\") = " + DICT.contains("act"));
     }
 
 

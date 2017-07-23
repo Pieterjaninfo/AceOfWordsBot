@@ -7,7 +7,8 @@
 
 How to run: 
 * First follow the instructions under setup.
-* Run src/main/Main.main()
+* Click new game on the Ace of Words client and wait for the game to start.
+* Run src/main/Main.main() of the bot.
 * Quickly click on the Ace of Words client so that it has focus.
 * Sit back and relax.
 
@@ -21,3 +22,5 @@ Setup of Ace of Words:
 
 To be added:
 configurable options without tampering with the scource code.
+
+![alt text](https://raw.githubusercontent.com/pieterjaninfo/AceOfWordsBot/master/resources/highscore.png)

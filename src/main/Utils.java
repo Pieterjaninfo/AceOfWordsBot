@@ -22,20 +22,17 @@ public class Utils {
 
     /** Reads a (.txt) file and returns a list of strings. */
     public static List<String> readFile(String input) {
-        Scanner s = null;
-        try {
-            s = new Scanner(new File(input));
+        List<String> list = new ArrayList<>();
+        try (Scanner s = new Scanner(new File(input))) {
+            while (s.hasNext()) {
+                //            list.add(s.next().toLowerCase().replace("\u0003", "").replace("\u0004","").replace("\u0005","").replace(
+                //                    "\u0006","").replace("\u0007","").replace("\b","")
+                //            );
+                list.add(s.next());
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        ArrayList<String> list = new ArrayList<>();
-        while (s.hasNext()){
-//            list.add(s.next().toLowerCase().replace("\u0003", "").replace("\u0004","").replace("\u0005","").replace(
-//                    "\u0006","").replace("\u0007","").replace("\b","")
-//            );
-            list.add(s.next());
-        }
-        s.close();
         return list;
     }
 

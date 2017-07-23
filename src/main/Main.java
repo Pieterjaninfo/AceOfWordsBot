@@ -11,6 +11,7 @@ public class Main {
         while (true) {
             // Capture letters
             String letters = capturer.captureLetters();
+            System.out.println("letters = " + letters);
 
             // Set words
             presser.setWords(Unscrambler.retrieveWords(letters));
@@ -20,4 +21,5 @@ public class Main {
             presser.nextPuzzle();
         }
     }
+
 }
