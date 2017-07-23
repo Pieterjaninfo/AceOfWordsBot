@@ -27,4 +27,4 @@ configurable options without tampering with the scource code.
 
 With this bot I was able to get a highscore of at least 10 with 6 zeros.
 This took around 3 hours resulting in a total of 179 games and a total of 11354 words typed.
-![alt text](https://raw.githubusercontent.com/Pieterjaninfo/AceOfWordsBot/tree/master/resources/highscore.png)
+![alt text](https://raw.githubusercontent.com/Pieterjaninfo/AceOfWordsBot/master/resources/highscore.png)
