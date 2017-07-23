@@ -77,4 +77,17 @@ public class Utils {
         return img;
     }
 
+
+    public static void main(String[] args) {
+        List<String> words = Utils.readFile("resources/typedwords.txt");
+
+        int wordcount = 0;
+
+        for (String word : words) {
+            wordcount += Unscrambler.retrieveWords(word).size();
+        }
+        System.out.println("wordcount = " + wordcount);
+
+    }
+
 }
