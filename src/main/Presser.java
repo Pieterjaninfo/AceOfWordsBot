@@ -21,17 +21,19 @@ public class Presser {
         }
     }
 
+    /** Set the to be typed words. */
     public void setWords(Set<String> words) {
         this.words = words;
     }
 
-
+    /* Types one character. */
     private void pressKey(char key) {
         int keycode = KeyEvent.getExtendedKeyCodeForChar(key);
         robot.keyPress(keycode);
         robot.keyRelease(keycode);
     }
 
+    /* Types one given word. */
     private void pressWord(String word) throws InterruptedException {
         for (int i = 0; i < word.length(); i++) {
             pressKey(word.charAt(i));
@@ -42,6 +44,7 @@ public class Presser {
         robot.keyRelease(KeyEvent.VK_ENTER);
     }
 
+    /** Types all the determined words. */
     public void pressAllWords() throws InterruptedException {
         Thread.sleep(1000);
         for (String word : words) {
@@ -50,6 +53,7 @@ public class Presser {
         }
     }
 
+    /** Clicks on the next puzzle button. */
     public void nextPuzzle() throws InterruptedException {
         Thread.sleep(6000);
         int x = 480;
@@ -60,6 +64,7 @@ public class Presser {
         robot.mouseRelease(InputEvent.BUTTON1_MASK);
         Thread.sleep(4000);
     }
+
 
 
     // ===================== EXECUTE CODE ===========================

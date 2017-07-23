@@ -9,12 +9,7 @@ import java.util.*;
 public class Unscrambler {
     private static final List<String> DICT = Utils.readFile("resources/dictionary_english.txt");
 
-
-    public static void main(String[] args) throws Exception {
-        System.out.println(retrieveWords("haremeda").size());
-    }
-
-
+    /** Returns all the possible words that can be build using the characters in the given string. */
     public static Set<String> retrieveWords(String letters) {
         String pattern = "[" + letters + "]+";
         Set<String> filteredWords = new HashSet<>();
@@ -40,6 +35,14 @@ public class Unscrambler {
             }
         }
         return furtherFilteredWords;
+    }
+
+
+
+    // ===================== EXECUTE CODE ===========================
+
+    public static void main(String[] args) throws Exception {
+        System.out.println(retrieveWords("haremeda").size());
     }
 
 

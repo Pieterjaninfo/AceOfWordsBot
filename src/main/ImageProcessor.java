@@ -6,15 +6,9 @@ import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
-import java.awt.image.DataBufferInt;
-import java.io.ByteArrayOutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.nio.Buffer;
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +28,14 @@ public class ImageProcessor {
     private static final int VAL_MIN = 255;
     private static final int VAL_MAX = 255;
 
+    /** Resizes the image into a 49x44 size. */
+    public static BufferedImage resizeImage(BufferedImage image) {
+        BufferedImage result = new BufferedImage(49, 44, BufferedImage.TYPE_3BYTE_BGR);
+        Graphics g = result.createGraphics();
+        g.drawImage(image, 0, 0, 49, 44, null);
+        g.dispose();
+        return result;
+    }
 
     /** Returns all the characters from the filtered black and white image. */
     public List<BufferedImage> getCharacters(BufferedImage rawImage) {
@@ -46,7 +48,7 @@ public class ImageProcessor {
         int y = rows.get(0);
         int height = rows.get(1) - rows.get(0);
         for (int i = 0; i < cols.size(); i += 2) {
-            chars.add(Capturer.resizeImage(image.getSubimage(cols.get(i), y, cols.get(i + 1) - cols.get(i), height)));
+            chars.add(resizeImage(image.getSubimage(cols.get(i), y, cols.get(i + 1) - cols.get(i), height)));
         }
         return chars;
     }

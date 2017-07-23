@@ -14,12 +14,13 @@ import java.util.List;
 import java.util.Scanner;
 
 /**
- * Tools for working with .txt files and for converting one data type into the other.
+ * Tools for working with .txt files (IO-handler).
  */
 public class Utils {
     private Utils() {}
     private static final String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+    /** Reads a (.txt) file and returns a list of strings. */
     public static List<String> readFile(String input) {
         Scanner s = null;
         try {
@@ -38,7 +39,7 @@ public class Utils {
         return list;
     }
 
-
+    /** Given a list of strings, will output a (.txt) file at the given output location */
     public static void writeFile(List<String> input, String output) {
         Path out = Paths.get(output);
         try {
@@ -48,7 +49,7 @@ public class Utils {
         }
     }
 
-
+    /** Stores the buffered image at the given output location. */
     public static void storeImage(BufferedImage image, String output) {
         String ext = output.substring(output.lastIndexOf(".") + 1);
         try {
@@ -58,17 +59,17 @@ public class Utils {
         }
     }
 
-
+    /** Loads all the images in the chars folder which prepend with char_ and adds it to a list of images. */
     public static List<BufferedImage> loadCharacters() {
         List<BufferedImage> images = new ArrayList<>();
         String path = "resources/chars/char_";
         for (int i = 0; i < letters.length(); i++) {
-            images.add(Capturer.resizeImage(loadImage(path + letters.charAt(i) + ".png")));
+            images.add(ImageProcessor.resizeImage(loadImage(path + letters.charAt(i) + ".png")));
         }
         return images;
     }
 
-
+    /** Loads the image at the given input location. */
     public static BufferedImage loadImage(String input) {
         BufferedImage img = null;
         try {

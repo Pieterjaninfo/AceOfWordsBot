@@ -28,6 +28,7 @@ public class Capturer {
         charsList = Utils.loadCharacters();
     }
 
+    /** Determines all the characters in the image. */
     public String captureLetters() {
         StringBuilder result = new StringBuilder();
 
@@ -39,27 +40,18 @@ public class Capturer {
         for (BufferedImage character : chars) {
             result.append(determineCharacter(character));
         }
-
-//        Utils.storeImage(chars.get(4), "resources/test_Q.png");
-//        Utils.storeImage(chars.get(3), "resources/test_O.png");
-//        Utils.storeImage(charsList.get(letters.indexOf("Q")), "resources/Q.png");
-//        Utils.storeImage(charsList.get(letters.indexOf("O")), "resources/O.png");
-
-
-        return result.toString();
+        return result.toString().toLowerCase();
     }
 
-
-    public BufferedImage captureScreen() {
+    /* Captures the main screen. */
+    private BufferedImage captureScreen() {
         Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
         return robot.createScreenCapture(screenRect);
     }
 
 
-    /**
-     * Checks whether two BufferedImages are pixel perfectly equal, assuming equal size.
-     */
-    public int pixelDeviations(BufferedImage imgA, BufferedImage imgB) {
+    /* Returns the amount of pixel deviations the second image has with the first image. */
+    private int pixelDeviations(BufferedImage imgA, BufferedImage imgB) {
         int width = Math.min(imgA.getWidth(), imgB.getWidth());
         int heigth = Math.min(imgA.getHeight(), imgB.getHeight());
 
@@ -71,14 +63,11 @@ public class Capturer {
                 }
             }
         }
-
-//        System.out.println(Math.abs(imgA.getHeight() - imgB.getHeight()) +
-//                Math.abs(imgA.getWidth()- imgB.getWidth()));
         return errorCount;
     }
 
-
-    public char determineCharacter(BufferedImage image) {
+    /* Determines the most probable character which the image could represent. */
+    private char determineCharacter(BufferedImage image) {
         int errors = Integer.MAX_VALUE;
         char result = '-';
 
@@ -95,34 +84,12 @@ public class Capturer {
         return result;
     }
 
-    public static BufferedImage resizeImage(BufferedImage image) {
-        BufferedImage result = new BufferedImage(49, 44, BufferedImage.TYPE_3BYTE_BGR);
-        Graphics g = result.createGraphics();
-        g.drawImage(image, 0, 0, 49, 44, null);
-        g.dispose();
-        return result;
-    }
-
 
     // ===================== EXECUTE CODE ===========================
 
     public static void main(String[] args) throws InterruptedException {
         Capturer capturer = new Capturer();
-
         Thread.sleep(1000);
-//        ImageProcessor proc = new ImageProcessor();
-//        BufferedImage image = capturer.captureScreen().getSubimage(20, 400, 1230, 160);
-//        Utils.storeImage(image, "resources/chars/char.png");
-//        image = Utils.loadImage("resources/chars/char.png");
-//        List<BufferedImage> chars = proc.getCharacters(image);
-
-//        Utils.storeImage(chars.get(3), "resources/test.png");
-//        Utils.storeImage(resizeImage(chars.get(3)), "resources/test_resized.png");
-//        System.out.println("==== Done loading images ====");
-//
-//        char c = capturer.determineCharacter(chars.get(3));
-//        System.out.println("character = " + c);
-
         System.out.println(capturer.captureLetters());
     }
 
