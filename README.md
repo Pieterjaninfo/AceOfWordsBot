@@ -5,11 +5,15 @@
 > The program allows for unlocking all the achievements whilst being AFK.
 
 
-How to run: Run src/main/Main.main()
+How to run: 
+* First follow the instructions under setup.
+* Run src/main/Main.main()
+* Quickly click on the Ace of Words client so that it has focus.
+* Sit back and relax.
 
 
 Setup of Ace of Words:
-* Enable 8 word game.
+* Enable 8 letters mode.
 * Put resolution on 1280x720.
 * Turn full screen off and tutorial off.
 * Controls: Turn keyboard on and gamepad off.
