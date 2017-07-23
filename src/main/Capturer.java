@@ -1,5 +1,7 @@
 package main;
 
+import org.opencv.core.Mat;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.List;
@@ -11,9 +13,10 @@ import java.util.List;
 public class Capturer {
 
     private Robot robot;
+    private ImageProcessor proc;
     private static List<BufferedImage> charsList;
 
-    String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private String letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     public Capturer() {
         try {
@@ -21,11 +24,29 @@ public class Capturer {
         } catch (AWTException e) {
             e.printStackTrace();
         }
+        proc = new ImageProcessor();
         charsList = Utils.loadCharacters();
     }
 
     public String captureLetters() {
-        return "nulepitc";  //TODO implement
+        StringBuilder result = new StringBuilder();
+
+        BufferedImage image = captureScreen().getSubimage(20, 400, 1230, 160);
+        Utils.storeImage(image, "resources/chars/char.png");
+        image = Utils.loadImage("resources/chars/char.png");
+        List<BufferedImage> chars = proc.getCharacters(image);
+
+        for (BufferedImage character : chars) {
+            result.append(determineCharacter(character));
+        }
+
+//        Utils.storeImage(chars.get(4), "resources/test_Q.png");
+//        Utils.storeImage(chars.get(3), "resources/test_O.png");
+//        Utils.storeImage(charsList.get(letters.indexOf("Q")), "resources/Q.png");
+//        Utils.storeImage(charsList.get(letters.indexOf("O")), "resources/O.png");
+
+
+        return result.toString();
     }
 
 
@@ -38,54 +59,71 @@ public class Capturer {
     /**
      * Checks whether two BufferedImages are pixel perfectly equal, assuming equal size.
      */
-    public boolean imageEqual(BufferedImage imgA, BufferedImage imgB) {
-        for (int y = 0; y < imgA.getHeight(); y++) {
-            for (int x = 0; x < imgA.getWidth(); x++) {
+    public int pixelDeviations(BufferedImage imgA, BufferedImage imgB) {
+        int width = Math.min(imgA.getWidth(), imgB.getWidth());
+        int heigth = Math.min(imgA.getHeight(), imgB.getHeight());
+
+        int errorCount = 0;
+        for (int y = 0; y < heigth; y++) {
+            for (int x = 0; x < width; x++) {
                 if (imgA.getRGB(x, y) != imgB.getRGB(x, y)) {
-                    return false;
+                    errorCount++;
                 }
             }
         }
-        return true;
+
+//        System.out.println(Math.abs(imgA.getHeight() - imgB.getHeight()) +
+//                Math.abs(imgA.getWidth()- imgB.getWidth()));
+        return errorCount;
     }
 
 
-    public int countSubImages(BufferedImage img, BufferedImage subimg) {
-        int count = 0;
-        int width = subimg.getWidth();
-        int heigth = subimg.getHeight();
+    public char determineCharacter(BufferedImage image) {
+        int errors = Integer.MAX_VALUE;
+        char result = '-';
 
-        for (int y = 400; y < 560; y++) {
-            for (int x = 20; x < 1250; x++) {
-//                System.out.printf("(x,y) = (%d,%d)%n", x, y);
-                if (imageEqual(img.getSubimage(x, y, width, heigth), subimg)) {
-                    count++;
-                    System.out.printf("(x,y) = (%d,%d)%n", x, y);
-                } else {
-//                    Utils.storeImage(img.getSubimage(x, y, width, heigth), "resources/test/x=" + x + "y=" + y + ".png");
-                }
+        for (int i = 0; i < charsList.size(); i++) {
+            int deviations = pixelDeviations(charsList.get(i), image);
+            if (deviations < errors) {
+                errors = deviations;
+                result = letters.charAt(i);
+
             }
+            System.out.println(letters.charAt(i) + " : " + deviations);
         }
-        return count;
+        System.out.println("");
+        return result;
     }
 
+    public static BufferedImage resizeImage(BufferedImage image) {
+        BufferedImage result = new BufferedImage(49, 44, BufferedImage.TYPE_3BYTE_BGR);
+        Graphics g = result.createGraphics();
+        g.drawImage(image, 0, 0, 49, 44, null);
+        g.dispose();
+        return result;
+    }
 
 
     // ===================== EXECUTE CODE ===========================
 
     public static void main(String[] args) throws InterruptedException {
         Capturer capturer = new Capturer();
-        ImageProcessor proc = new ImageProcessor();
 
         Thread.sleep(1000);
-        BufferedImage image = capturer.captureScreen().getSubimage(20, 400, 1230, 160);
-        Utils.storeImage(image, "resources/chars/char.png");
-        image = Utils.loadImage("resources/chars/char.png");
-        List<BufferedImage> chars = proc.getCharacters(image);
+//        ImageProcessor proc = new ImageProcessor();
+//        BufferedImage image = capturer.captureScreen().getSubimage(20, 400, 1230, 160);
+//        Utils.storeImage(image, "resources/chars/char.png");
+//        image = Utils.loadImage("resources/chars/char.png");
+//        List<BufferedImage> chars = proc.getCharacters(image);
 
+//        Utils.storeImage(chars.get(3), "resources/test.png");
+//        Utils.storeImage(resizeImage(chars.get(3)), "resources/test_resized.png");
+//        System.out.println("==== Done loading images ====");
+//
+//        char c = capturer.determineCharacter(chars.get(3));
+//        System.out.println("character = " + c);
 
-
-
+        System.out.println(capturer.captureLetters());
     }
 
 }

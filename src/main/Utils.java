@@ -63,7 +63,7 @@ public class Utils {
         List<BufferedImage> images = new ArrayList<>();
         String path = "resources/chars/char_";
         for (int i = 0; i < letters.length(); i++) {
-            images.add(loadImage(path + letters.charAt(i) + ".png"));
+            images.add(Capturer.resizeImage(loadImage(path + letters.charAt(i) + ".png")));
         }
         return images;
     }

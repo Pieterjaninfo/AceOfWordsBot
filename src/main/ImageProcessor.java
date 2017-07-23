@@ -46,7 +46,7 @@ public class ImageProcessor {
         int y = rows.get(0);
         int height = rows.get(1) - rows.get(0);
         for (int i = 0; i < cols.size(); i += 2) {
-            chars.add(image.getSubimage(cols.get(i), y, cols.get(i + 1) - cols.get(i), height));
+            chars.add(Capturer.resizeImage(image.getSubimage(cols.get(i), y, cols.get(i + 1) - cols.get(i), height)));
         }
         return chars;
     }
